@@ -1,6 +1,7 @@
 
 import jssc.SerialPort;
 import jssc.SerialPortException;
+import jssc.SerialPortList;
 import javax.swing.JOptionPane;
 
 public class Tela extends javax.swing.JFrame {
@@ -9,8 +10,20 @@ public class Tela extends javax.swing.JFrame {
 
     public Tela() {
         initComponents();
+         preencherPortasDisponiveis();
     }
-
+  private void preencherPortasDisponiveis() {
+        // Limpar as portas existentes na JComboBox
+        SelectPortas.removeAllItems();
+        
+        // Obter a lista de portas seriais disponíveis
+        String[] portNames = SerialPortList.getPortNames();
+        
+        // Adicionar cada porta serial disponível à JComboBox
+        for (String portName : portNames) {
+            SelectPortas.addItem(portName);
+        }
+  }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -19,7 +32,7 @@ public class Tela extends javax.swing.JFrame {
         AbrirComunica = new javax.swing.JButton();
         PararComunica = new javax.swing.JButton();
         texto = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        SelectPortas = new javax.swing.JComboBox<>();
         Imprimir = new javax.swing.JTextField();
 
         jCheckBox1.setText("jCheckBox1");
@@ -46,7 +59,12 @@ public class Tela extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        SelectPortas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        SelectPortas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SelectPortasActionPerformed(evt);
+            }
+        });
 
         Imprimir.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         Imprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -72,7 +90,7 @@ public class Tela extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(SelectPortas, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -82,7 +100,7 @@ public class Tela extends javax.swing.JFrame {
                 .addComponent(texto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SelectPortas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(AbrirComunica)
@@ -128,7 +146,11 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_PararComunicaActionPerformed
 
     private void ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimirActionPerformed
-
+  if (serialPort != null && serialPort.isOpened()) {
+        Imprimir.setText("Conexão serial está aberta.");
+    } else {
+        Imprimir.setText("Conexão serial não está aberta.");
+    }
     }//GEN-LAST:event_ImprimirActionPerformed
 
     private void AbrirComunicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirComunicaActionPerformed
@@ -144,6 +166,19 @@ public class Tela extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_AbrirComunicaActionPerformed
+
+    private void SelectPortasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectPortasActionPerformed
+          // Limpar as portas existentes na JComboBox
+    SelectPortas.removeAllItems();
+    
+    // Obter a lista de portas seriais disponíveis
+    String[] portNames = SerialPortList.getPortNames();
+    
+    // Adicionar cada porta serial disponível à JComboBox
+    for (String portName : portNames) {
+        SelectPortas.addItem(portName);
+    }
+    }//GEN-LAST:event_SelectPortasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,8 +219,8 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JButton AbrirComunica;
     private javax.swing.JTextField Imprimir;
     private javax.swing.JButton PararComunica;
+    private javax.swing.JComboBox<String> SelectPortas;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JTextField texto;
     // End of variables declaration//GEN-END:variables
 }

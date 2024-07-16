@@ -38,8 +38,12 @@ public class Tela extends javax.swing.JFrame {
         jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         AbrirComunica.setText("INICIAR");
+        AbrirComunica.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        AbrirComunica.setContentAreaFilled(false);
+        AbrirComunica.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AbrirComunica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AbrirComunicaActionPerformed(evt);
@@ -47,6 +51,8 @@ public class Tela extends javax.swing.JFrame {
         });
 
         PararComunica.setText("PARAR");
+        PararComunica.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        PararComunica.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         PararComunica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PararComunicaActionPerformed(evt);
@@ -60,6 +66,8 @@ public class Tela extends javax.swing.JFrame {
         });
 
         SelectPortas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        SelectPortas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        SelectPortas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SelectPortas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SelectPortasActionPerformed(evt);
@@ -102,7 +110,7 @@ public class Tela extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SelectPortas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(AbrirComunica)
                 .addGap(18, 18, 18)
                 .addComponent(PararComunica)
@@ -110,6 +118,7 @@ public class Tela extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoActionPerformed
@@ -147,7 +156,9 @@ public class Tela extends javax.swing.JFrame {
 
     private void ImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImprimirActionPerformed
   if (serialPort != null && serialPort.isOpened()) {
-        Imprimir.setText("Conexão serial está aberta.");
+      String textoDigitado = texto.getText();
+        Imprimir.setText("Conexão serial está aberta. | "+textoDigitado);
+     
     } else {
         Imprimir.setText("Conexão serial não está aberta.");
     }
